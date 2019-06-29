@@ -12,14 +12,20 @@ app.use(bodyParser.json())
 //use cors
 app.use(cors());
 
-const route = "api/";
-app.get(route+"teacher/",handlers.getAllUsers)
+const route = "/api/";
+app.get(route+"teacher",handlers.getAllUsers)
 
-app.post(route+"teacher/",handlers.registerTeacher)
+// teacher api
+app.post(route+"teacher",handlers.registerTeacher)
+
+
+// student api
+app.post(route+"student",handlers.registerStudent)
+app.get(route+"student",handlers.getAllStudent)
 
 
 //start server
-const port = 5000;
+const port = 3000;
 app.listen(port,()=>{
     console.log("Server listening on "+port);
 })

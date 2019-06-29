@@ -16,7 +16,7 @@ exports.up = function(knex) {
                     table.string('class')
                     table.string('contactNumber')
                     table.string('address')
-    
+     
                 })
                 .then(console.log("Table "+table+" created."));
         }else{

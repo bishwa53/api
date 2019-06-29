@@ -13,7 +13,7 @@ function getAllUsers(req,res){
         res.json(data)
     })
     .catch(error => {
-        res.json("fail","Error occured!")
+        res.json({"fail":"Error occured!"})
     })
 }
 
@@ -23,12 +23,12 @@ function registerTeacher(req,res){
     const hashedPassword = bcrypt.hashSync(req.body.password, 10)
     // required db values
     var values = {
-        username: req.body.firstName,
-        username: req.body.lastName,
-        username: req.body.contact,
-        username: req.body.address,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        contact: req.body.contact,
+        address: req.body.address,
         username: req.body.username,
-        password: hashedPassword,
+        password: hashedPassword
     };
 
     //add to db
@@ -46,8 +46,50 @@ function registerTeacher(req,res){
     
 }
 
+function registerStudent(req,res){
+
+    //hash password
+    const hashedPassword = bcrypt.hashSync(req.body.password, 10)
+    // required db values
+    var values = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        contactNumber: req.body.contact,
+        address: req.body.address,
+        username: req.body.username,
+        class: req.body.class,
+        password: hashedPassword
+    };
+
+    //add to db
+    knex('students')
+    .insert(values)
+    .then(
+        ()=>{
+            res.json({'status':'student registered'})
+        }
+    )
+    .catch(error => {
+            res.json({'status':'error'})
+    })
+}
+
+function getAllStudent(req,res){
+    knex
+    .select()
+    .table('students')
+    .then((data)=>{
+        res.json(data)
+    })
+    .catch(error => {
+        res.json({"fail":"Error occured!"})
+    })
+}
+
 
 module.exports = {
     registerTeacher : registerTeacher,
-    getAllUsers : getAllUsers
+    getAllUsers : getAllUsers,
+    registerStudent : registerStudent,
+    getAllStudent : getAllStudent
 }
